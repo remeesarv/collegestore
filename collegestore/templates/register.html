@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <title>Register</title>
+</head>
+<body>
+{% include 'navbar.html' %}
+<br><br>
+<h2>Register Form</h2>
+<form method="post">
+    {% csrf_token %}
+    <input type="text" name="username" placeholder="Enter the username"><br>
+    <input type="password" name="password" placeholder="Enter your Password"><br>
+    <input type="password" name="conpassword" placeholder="Confirm your Password"><br>
+    <button id="submit">Register</button>
+</form>
+{% if messages %}
+<div class="alert alert-light">
+    <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+{% include 'footer.html' %}
+</body>
+</html>

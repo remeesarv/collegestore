@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+</head>
+<body>
+{% include 'navbar.html' %}
+{% block content %}
+<div>
+   <img class="my_image my_image_padding" src="{% static 'img/banner.png' %}" alt="Banner Image" width="100%" height="auto">
+</div>
+<div>
+    <a class="navbar-brand" href="login">
+       <a class="btn btn-warning" href="{% url 'collegeapp:login'%}">Login</a>
+      <div class="">
+      <a href="{% url 'collegeapp:login' %}"></a>
+      </div>
+  </a>
+</div>
+{% endblock %}
+</body>
+</html>

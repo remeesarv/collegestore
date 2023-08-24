@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register Form</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body style="background-color:cyan;">
+<h2>Registration Form</h2>
+<form method="post" action="{% url 'collegeapp:submit' %}">
+    {% csrf_token %}
+    <label>Name:</label><input type="text" name="name" required><br><br>
+    <label>Date of Birth:</label><input type="date" name="dob" id="dob" required><br><br>
+    <label>Age:</label><input type="number" name="age" id="age"><br><br>
+    <label>Gender: required</label><br>
+        <input type="radio" id="male" name="gender" value="M">
+        <label for="male">Male</label><br>
+        <input type="radio" id="female" name="gender" value="F">
+        <label for="female">Female</label><br>
+        <input type="radio" id="other" name="gender" value="O">
+        <label for="other">Other</label><br><br>
+    <label>Phone Number:</label><input type="text" name="ph" required><br><br>
+    <label>Email:</label><input type="email" name="email" required><br><br>
+    <label>Address:</label><textarea id="address" name="address" rows="5" required></textarea><br><br>
+    <label>Department:</label>
+    <select id="department">
+        <option value="">Select a department</option>
+        <option value="commerce">Commerce</option>
+        <option value="economics">Economics</option>
+        <option value="english">English</option>
+        <option value="geography">Geography</option>
+        <option value="maths">Mathematics</option>
+        <option value="zoology">Zoology</option>
+        <option value="physiology">Physiology</option>
+        <option value="socialwork">Social Work</option>
+    </select><br><br>
+    <label>Course:</label>
+    <select id="course">
+        <option value="">Select a course</option>
+    </select><br><br>
+    <label>Purpose:</label>
+    <select id="purpose">
+        <option value="">Select a purpose</option>
+        <option value="enquiry">Enquiry</option>
+        <option value="order">Place Order</option>
+        <option value="return">Return</option>
+    </select><br><br>
+    <label>Materials Provide:</label><br>
+    <input type="checkbox" id="debit_note_book" name="materials" value="debit_note_book">
+    <label for="debit_note_book">Debit Note Book</label><br>
+    <input type="checkbox" id="pen" name="materials" value="pen">
+    <label for="pen">Pen</label><br>
+    <input type="checkbox" id="pencil" name="materials" value="pencil">
+    <label for="pencil">Pencil</label><br>
+    <input type="checkbox" id="instrument_box" name="materials" value="instrument_box">
+    <label for="instrument_box">Instrument Box</label><br>
+    <input type="checkbox" id="exam_papers" name="materials" value="exam_papers">
+    <label for="exam_papers">Exam Papers</label><br>
+    <br><br>
+
+    <input type="submit">
+</form>
+<script>
+$(document).ready(function () {
+    const departmentCourses = {
+        commerce: ["BBA","MBA", "BCom", "MCom"],
+        economics: ["BA","MA"],
+        english: ["BA","MA"],
+        geography: ["BSc","MSc","PhD"],
+        maths: ["BSc", "MSc","PhD"],
+        zoology: ["BSc","MSc","PhD"],
+        physiology: ["BA","MA"],
+        socialwork: ["BSW","MSW"]
+    };
+    function populateCourses() {
+        const selectedDepartment = $("#department").val();
+        const courseDropdown = $("#course");
+
+        // Clear existing options
+        courseDropdown.empty();
+
+        // Add new options based on the selected department
+        if (selectedDepartment in departmentCourses) {
+            departmentCourses[selectedDepartment].forEach(function (course) {
+                courseDropdown.append($("<option></option>").attr("value", course).text(course));
+            });
+        } else {
+            courseDropdown.append($("<option></option>").attr("value", "").text("Select a course"));
+        }
+    }
+
+    // Initial population of the Courses dropdown
+    populateCourses();
+
+    // Event listener for department dropdown change
+    $("#department").change(function () {
+        populateCourses();
+    });
+    $("#dob").change(function () {
+        const dob = new Date($("#dob").val());
+        const today = new Date();
+        const age = today.getFullYear() - dob.getFullYear();
+
+        // Check if the birthday has occurred this year
+        if (today.getMonth() < dob.getMonth() || (today.getMonth() === dob.getMonth() && today.getDate() < dob.getDate())) {
+            age--;
+        }
+
+        $("#age").val(age);
+    });
+});
+</script>
+</body>
+</html>

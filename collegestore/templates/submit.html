@@ -1,0 +1,18 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Confirmed</title>
+</head>
+<body>
+{% block content %}
+<h1>Your Order Has Been Confirmed</h1>
+<p><h3>Thank you for your order. We have received your request and will process it shortly.</h3></p>
+<form method="post" action="{% url 'collegeapp:logout' %}">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Logout</button>
+</form>
+{% endblock %}
+</body>
+</html>
